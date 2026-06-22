@@ -5,3 +5,8 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution:
     '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 }).addTo(map);
+
+fetch("/geo/lines.geojson").then((response) => {
+  var routeGeo = response.json();
+  L.geoJSON(routeGeo).addTo(map);
+});
