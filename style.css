@@ -1,0 +1,25 @@
+html,
+body {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#map {
+  position: fixed;
+  inset: 0;
+}
+
+#sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 35%;
+  border-top-left-radius: 32px;
+  border-top-right-radius: 32px;
+  background: rgb(242, 242, 247);
+  z-index: 99;
+  padding-top: 1%;
+  padding-left: 2%;
+  padding-right: 2%;
+}
