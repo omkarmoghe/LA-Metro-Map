@@ -11,13 +11,13 @@ const icon = L.divIcon({
   className: "station-icon",
 });
 
-fetch("/geo/lines.geojson")
+fetch("geo/lines.geojson")
   .then((response) => response.json())
   .then((routeGeo) => {
     L.geoJSON(routeGeo).addTo(map);
   });
 
-fetch("/geo/stops.csv")
+fetch("geo/stops.csv")
   .then((response) => response.text())
   .then((csv) => {
     const [headerLine, ...dataLines] = csv.split("\n");
