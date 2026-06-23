@@ -1,39 +1,48 @@
-const map = L.map("map").setView([34.0522, -118.2437], 10);
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  zoomControl: false,
-  maxZoom: 16,
-  attribution:
-    '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-}).addTo(map);
-
-const icon = L.divIcon({
-  html: "<span>Ⓜ️</span>",
-  className: "station-icon",
+const map = new maplibregl.Map({
+  container: "map",
+  style: "https://tiles.openfreemap.org/styles/liberty",
+  center: [-118.2437, 34.0522],
+  zoom: 10,
 });
 
-fetch("geo/lines.geojson")
-  .then((response) => response.json())
-  .then((routeGeo) => {
-    L.geoJSON(routeGeo).addTo(map);
-  });
-
-fetch("geo/stops.csv")
-  .then((response) => response.text())
-  .then((csv) => {
-    const [headerLine, ...dataLines] = csv.split("\n");
-    const headers = headerLine.split(",");
-
-    const stops = dataLines
-      .map((line) =>
-        Object.fromEntries(line.split(",").map((v, i) => [headers[i], v])),
-      )
-      .forEach((stop) => {
-        const stopLat = parseFloat(stop.stop_lat);
-        const stopLon = parseFloat(stop.stop_lon);
-        if (isNaN(stopLat) || isNaN(stopLon)) return;
-
-        L.marker([stopLat, stopLon], { icon })
-          .addTo(map)
-          .bindPopup(stop.stop_name);
+map.on("load", () => {
+  fetch("geo/lines.geojson")
+    .then((response) => response.json())
+    .then((routeGeo) => {
+      map.addSource("rail-lines", {
+        type: "geojson",
+        data: routeGeo,
       });
-  });
+      map.addLayer({
+        id: "rail-lines",
+        type: "line",
+        source: "rail-lines",
+      });
+    });
+
+  fetch("geo/stops.csv")
+    .then((response) => response.text())
+    .then((csv) => {
+      const [headerLine, ...dataLines] = csv.split("\n");
+      const headers = headerLine.split(",");
+
+      const stops = dataLines
+        .map((line) =>
+          Object.fromEntries(line.split(",").map((v, i) => [headers[i], v])),
+        )
+        .forEach((stop) => {
+          if (stop.location_type !== "1") return;
+
+          const stopLon = parseFloat(stop.stop_lon);
+          const stopLat = parseFloat(stop.stop_lat);
+          if (isNaN(stopLat) || isNaN(stopLon)) return;
+
+          const stopMarker = document.createElement("span");
+          stopMarker.textContent = "Ⓜ️";
+
+          new maplibregl.Marker({ element: stopMarker })
+            .setLngLat([stopLon, stopLat])
+            .addTo(map);
+        });
+    });
+});
