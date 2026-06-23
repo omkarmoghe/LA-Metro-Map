@@ -4,6 +4,10 @@ const ws = new WebSocket(
 
 let trainMarkers = {};
 
+ws.addEventListener("open", (event) => {
+  connected = true;
+});
+
 ws.addEventListener("message", (event) => {
   const payload = JSON.parse(event.data);
   vehicleUpdate(payload);

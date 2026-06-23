@@ -33,7 +33,12 @@
 
   <body>
     <div id="map"></div>
-    <div id="sheet" x-data></div>
+    <div id="sheet" x-data="{ connected: false }">
+      <div class="title">
+        <span>LA Metro Map</span>
+        <span x-text="connected ? '🟢' : '🔴'"></span>
+      </div>
+    </div>
   </body>
 
   <script src="map.js"></script>
