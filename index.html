@@ -21,6 +21,8 @@
       document.addEventListener("alpine:init", () => {
         Alpine.store("ws", { connected: false });
         Alpine.store("map", { selectedStop: null });
+        Alpine.store("train", { selectedTrain: null });
+        Alpine.store("routes", {});
       });
     </script>
     <script src="https://unpkg.com/alpinejs" defer></script>
@@ -44,20 +46,50 @@
 
   <body>
     <div id="map"></div>
-    <div id="sheet" x-data>
-      <div class="title">
+    <div id="sheet" class="vertical-container">
+      <div class="horizontal-container title" x-data="{ ws: $store.ws }">
         <span class="silkscreen-regular">LA Metro</span>
-        <span x-text="$store.ws.connected ? '🟢' : '🔴'"></span>
+        <span x-text="ws.connected ? '🟢' : '🔴'"></span>
       </div>
-      <div x-show="$store.map.selectedStop">
+      <div x-data="{ map: $store.map }" x-show="map.selectedStop">
+        <span
+          class="jetbrains-mono-bold"
+          x-text="map.selectedStop?.stop_name"
+        ></span>
+      </div>
+      <div
+        class="vertical-container"
+        x-data="{
+          train: $store.train,
+          routes: $store.routes
+        }"
+        x-show="train.selectedTrain"
+      >
         <span
           class="jetbrains-mono-regular"
-          x-text="$store.map.selectedStop?.stop_name"
+          x-text="'Train ' + train.selectedTrain?.vehicle.label"
+        ></span>
+        <div class="horizontal-container">
+          <img
+            class="route-icon"
+            x-bind:src="routes[train.selectedTrain?.trip.routeId]?.iconography_url"
+          />
+          <span
+            class="jetbrains-mono-bold"
+            x-text="routes[train.selectedTrain?.trip.routeId]?.long_name"
+          ></span>
+        </div>
+        <span
+          class="jetbrains-mono-regular"
+          x-text="
+            train.selectedTrain?.trip.directionId === 0 ? routes[train.selectedTrain?.trip.routeId]?.description_0 : routes[train.selectedTrain?.trip.routeId]?.description_1
+          "
         ></span>
       </div>
     </div>
   </body>
 
   <script src="map.js"></script>
+  <script src="routes.js"></script>
   <script src="trains.js"></script>
 </html>

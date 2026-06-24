@@ -27,6 +27,9 @@ function vehicleUpdate(payload) {
     const trainMarker = document.createElement("span");
     trainMarker.className = "train-marker";
     trainMarker.textContent = "🚈";
+    trainMarker.addEventListener("click", () => {
+      Alpine.store("train").selectedTrain = payload.vehicle;
+    });
     trainMarkers[payload.id] = new maplibregl.Marker({
       element: trainMarker,
     });

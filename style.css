@@ -25,19 +25,26 @@ body {
   padding-top: 1%;
   padding-left: 2%;
   padding-right: 2%;
+  gap: 0.2em;
+}
+
+.horizontal-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.vertical-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 0.2em;
 }
 
 .title {
   width: 100%;
-  display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  align-items: flex-start;
   font-size: 2em;
 }
 
@@ -45,10 +52,10 @@ body {
   align-content: center;
   text-align: center;
   justify-content: center;
-  width: 1.5em;
-  height: 1.5m;
+  width: 1.8em;
+  height: 1.8m;
   border-radius: 50%;
-  border: 1px solid black;
+  border: 1px dashed black;
 }
 
 .train-marker {
@@ -60,4 +67,9 @@ body {
   border-radius: 50%;
   background: var(--sheet-bg);
   border: 2px dashed white;
+}
+
+.route-icon {
+  width: 2em;
+  height: 2em;
 }
