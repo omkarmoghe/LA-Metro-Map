@@ -20,6 +20,7 @@
     <script>
       document.addEventListener("alpine:init", () => {
         Alpine.store("ws", { connected: false });
+        Alpine.store("map", { selectedStop: null });
       });
     </script>
     <script src="https://unpkg.com/alpinejs" defer></script>
@@ -47,6 +48,12 @@
       <div class="title">
         <span class="silkscreen-regular">LA Metro</span>
         <span x-text="$store.ws.connected ? '🟢' : '🔴'"></span>
+      </div>
+      <div x-show="$store.map.selectedStop">
+        <span
+          class="jetbrains-mono-regular"
+          x-text="$store.map.selectedStop?.stop_name"
+        ></span>
       </div>
     </div>
   </body>

@@ -40,6 +40,9 @@ map.on("load", () => {
           const stopMarker = document.createElement("span");
           stopMarker.className = "stop-marker";
           stopMarker.textContent = "Ⓜ️";
+          stopMarker.addEventListener("click", () => {
+            Alpine.store("map").selectedStop = stop;
+          });
 
           new maplibregl.Marker({ element: stopMarker })
             .setLngLat([stopLon, stopLat])
