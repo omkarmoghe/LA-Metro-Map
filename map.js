@@ -38,6 +38,7 @@ map.on("load", () => {
           if (isNaN(stopLat) || isNaN(stopLon)) return;
 
           const stopMarker = document.createElement("span");
+          stopMarker.className = "stop-marker";
           stopMarker.textContent = "Ⓜ️";
 
           new maplibregl.Marker({ element: stopMarker })

@@ -5,7 +5,7 @@ const ws = new WebSocket(
 let trainMarkers = {};
 
 ws.addEventListener("open", (event) => {
-  connected = true;
+  Alpine.store("ws").connected = true;
 });
 
 ws.addEventListener("message", (event) => {
@@ -18,12 +18,14 @@ ws.addEventListener("error", (event) => {
 });
 
 ws.addEventListener("close", (event) => {
+  Alpine.store("ws").connected = false;
   console.log(`WebSocket closed: ${event.code} ${event.reason}`);
 });
 
 function vehicleUpdate(payload) {
   if (!Object.hasOwn(trainMarkers, payload.id)) {
     const trainMarker = document.createElement("span");
+    trainMarker.className = "train-marker";
     trainMarker.textContent = "🚈";
     trainMarkers[payload.id] = new maplibregl.Marker({
       element: trainMarker,

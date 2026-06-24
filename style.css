@@ -1,5 +1,6 @@
 :root {
   --sheet-ratio: 25%;
+  --sheet-bg: rgb(242, 242, 247);
 }
 
 html,
@@ -20,7 +21,7 @@ body {
   left: 0;
   right: 0;
   height: var(--sheet-ratio);
-  background: rgb(242, 242, 247);
+  background: var(--sheet-bg);
   padding-top: 1%;
   padding-left: 2%;
   padding-right: 2%;
@@ -31,4 +32,26 @@ body {
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
+  font-size: 2em;
+}
+
+.stop-marker {
+  align-content: center;
+  text-align: center;
+  justify-content: center;
+  width: 1.5em;
+  height: 1.5m;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+.train-marker {
+  align-content: center;
+  text-align: center;
+  justify-content: center;
+  width: 1.8em;
+  height: 1.8em;
+  border-radius: 50%;
+  background: var(--sheet-bg);
+  border: 2px dashed white;
 }

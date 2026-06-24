@@ -11,8 +11,17 @@
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Alpine.js -->
+    <script>
+      document.addEventListener("alpine:init", () => {
+        Alpine.store("ws", { connected: false });
+      });
+    </script>
     <script src="https://unpkg.com/alpinejs" defer></script>
 
     <!-- MapLibre -->
@@ -23,6 +32,7 @@
     <script src="https://unpkg.com/maplibre-gl@^5.24/dist/maplibre-gl.js"></script>
 
     <!-- Stylesheet -->
+    <link rel="stylesheet" href="fonts.css" />
     <link rel="stylesheet" href="style.css" />
 
     <meta
@@ -33,10 +43,10 @@
 
   <body>
     <div id="map"></div>
-    <div id="sheet" x-data="{ connected: false }">
+    <div id="sheet" x-data>
       <div class="title">
-        <span>LA Metro Map</span>
-        <span x-text="connected ? '🟢' : '🔴'"></span>
+        <span class="silkscreen-regular">LA Metro</span>
+        <span x-text="$store.ws.connected ? '🟢' : '🔴'"></span>
       </div>
     </div>
   </body>
