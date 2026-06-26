@@ -1,6 +1,10 @@
 :root {
   --sheet-ratio: 30%;
-  --sheet-bg: rgb(242, 242, 247);
+  --sheet-bg: #f2f2f7;
+  --sheet-radius: 20px;
+  --text-primary: #1c1c1e;
+  --text-secondary: #6e6e73;
+  --separator: rgba(60, 60, 67, 0.12);
 }
 
 html,
@@ -12,7 +16,6 @@ body {
 #map {
   position: fixed;
   inset: 0;
-  bottom: var(--sheet-ratio);
 }
 
 #sheet {
@@ -22,10 +25,11 @@ body {
   right: 0;
   height: var(--sheet-ratio);
   background: var(--sheet-bg);
-  padding-top: 1%;
-  padding-left: 2%;
-  padding-right: 2%;
-  gap: 0.2em;
+  border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
+  box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.12);
+  padding: 8px 18px 16px;
+  z-index: 10;
+  overflow-y: scroll;
 }
 
 .horizontal-container {
@@ -40,36 +44,66 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  gap: 0.8em;
 }
 
 .title {
   width: 100%;
   justify-content: space-between;
-  font-size: 2em;
+  font-size: 1.75em;
+  color: var(--text-primary);
+  padding-bottom: 0.25em;
+  border-bottom: 1px dashed var(--separator);
+}
+
+.stop-info {
+  color: var(--text-primary);
+}
+
+.train-info {
+  gap: 0.2em;
+  color: var(--text-primary);
+}
+
+.train-info > .jetbrains-mono-regular:first-child {
+  font-size: 0.8em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.train-info > .jetbrains-mono-regular:last-child {
+  font-size: 0.8em;
+  color: var(--text-secondary);
 }
 
 .stop-marker {
-  align-content: center;
-  text-align: center;
+  display: flex;
+  align-items: center;
   justify-content: center;
   width: 1.8em;
-  height: 1.8m;
+  height: 1.8em;
   border-radius: 50%;
-  border: 1px dashed black;
+  border: 1.5px solid rgba(0, 0, 0, 0.22);
+}
+
+.stop-marker:hover {
+  transform: scale(1.2);
 }
 
 .train-marker {
-  align-content: center;
-  text-align: center;
+  display: flex;
+  align-items: center;
   justify-content: center;
   width: 1.8em;
   height: 1.8em;
   border-radius: 50%;
   background: var(--sheet-bg);
-  border: 2px dashed white;
+  border: 2px solid rgba(255, 255, 255, 0.85);
 }
 
 .route-icon {
   width: 2em;
   height: 2em;
+  border-radius: 5px;
 }

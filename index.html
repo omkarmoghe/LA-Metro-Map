@@ -51,14 +51,18 @@
         <span class="silkscreen-regular">LA Metro</span>
         <span x-text="ws.connected ? '🟢' : '🔴'"></span>
       </div>
-      <div x-data="{ map: $store.map }" x-show="map.selectedStop">
+      <div
+        class="stop-info"
+        x-data="{ map: $store.map }"
+        x-show="map.selectedStop"
+      >
         <span
           class="jetbrains-mono-bold"
           x-text="map.selectedStop?.stop_name"
         ></span>
       </div>
       <div
-        class="vertical-container"
+        class="vertical-container train-info"
         x-data="{
           train: $store.train,
           routes: $store.routes
