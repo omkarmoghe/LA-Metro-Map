@@ -16,6 +16,7 @@ body {
 #map {
   position: fixed;
   inset: 0;
+  bottom: var(--sheet-ratio);
 }
 
 #sheet {
@@ -56,6 +57,10 @@ body {
   border-bottom: 1px dashed var(--separator);
 }
 
+.connection-indicator {
+  font-size: 0.5em;
+}
+
 .stop-info {
   color: var(--text-primary);
 }
@@ -65,14 +70,7 @@ body {
   color: var(--text-primary);
 }
 
-.train-info > .jetbrains-mono-regular:first-child {
-  font-size: 0.8em;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.train-info > .jetbrains-mono-regular:last-child {
+.train-info .train-detail {
   font-size: 0.8em;
   color: var(--text-secondary);
 }

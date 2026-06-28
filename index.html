@@ -32,7 +32,10 @@
       rel="stylesheet"
       href="https://unpkg.com/maplibre-gl@^5.24/dist/maplibre-gl.css"
     />
-    <script src="https://unpkg.com/maplibre-gl@^5.24/dist/maplibre-gl.js"></script>
+    <script
+      src="https://unpkg.com/maplibre-gl@^5.24/dist/maplibre-gl.js"
+      defer
+    ></script>
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="fonts.css" />
@@ -49,7 +52,10 @@
     <div id="sheet" class="vertical-container">
       <div class="horizontal-container title" x-data="{ ws: $store.ws }">
         <span class="silkscreen-regular">LA Metro</span>
-        <span x-text="ws.connected ? '🟢' : '🔴'"></span>
+        <span
+          class="connection-indicator"
+          x-text="ws.connected ? '🟢' : '🔴'"
+        ></span>
       </div>
       <div
         class="stop-info"
@@ -69,10 +75,6 @@
         }"
         x-show="train.selectedTrain"
       >
-        <span
-          class="jetbrains-mono-regular"
-          x-text="'Train ' + train.selectedTrain?.vehicle.label"
-        ></span>
         <div class="horizontal-container">
           <img
             class="route-icon"
@@ -82,9 +84,13 @@
             class="jetbrains-mono-bold"
             x-text="routes[train.selectedTrain?.trip.routeId]?.long_name"
           ></span>
+          <span
+            class="jetbrains-mono-regular train-detail"
+            x-text="'Train ' + train.selectedTrain?.vehicle.label"
+          ></span>
         </div>
         <span
-          class="jetbrains-mono-regular"
+          class="jetbrains-mono-regular train-detail"
           x-text="
             train.selectedTrain?.trip.directionId === 0 ? routes[train.selectedTrain?.trip.routeId]?.description_0 : routes[train.selectedTrain?.trip.routeId]?.description_1
           "
@@ -93,7 +99,7 @@
     </div>
   </body>
 
-  <script src="map.js"></script>
-  <script src="routes.js"></script>
-  <script src="trains.js"></script>
+  <script src="map.js" defer></script>
+  <script src="routes.js" defer></script>
+  <script src="trains.js" defer></script>
 </html>
