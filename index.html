@@ -5,16 +5,18 @@
     <!-- <link rel="icon" type="image/x-icon" href="icon.png" /> -->
 
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
       rel="stylesheet"
-    />
+      defer
+>
     <link
       href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap"
       rel="stylesheet"
-    />
+      defer
+>
 
     <!-- Alpine.js -->
     <script>
@@ -23,6 +25,7 @@
         Alpine.store("map", { selectedStop: null });
         Alpine.store("train", { selectedTrain: null });
         Alpine.store("routes", {});
+        Alpine.store("stopTimes", { byTripId: {}, byStopId: {} });
       });
     </script>
     <script src="https://unpkg.com/alpinejs" defer></script>
@@ -31,20 +34,21 @@
     <link
       rel="stylesheet"
       href="https://unpkg.com/maplibre-gl@^5.24/dist/maplibre-gl.css"
-    />
+      defer
+>
     <script
       src="https://unpkg.com/maplibre-gl@^5.24/dist/maplibre-gl.js"
       defer
     ></script>
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="fonts.css" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="fonts.css" defer>
+    <link rel="stylesheet" href="style.css" defer>
 
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
+>
   </head>
 
   <body>
@@ -58,7 +62,7 @@
         ></span>
       </div>
       <div
-        class="stop-info"
+        class="vertical-container stop-info"
         x-data="{ map: $store.map }"
         x-show="map.selectedStop"
       >
@@ -71,7 +75,8 @@
         class="vertical-container train-info"
         x-data="{
           train: $store.train,
-          routes: $store.routes
+          routes: $store.routes,
+          stopTimesByTripId: $store.stopTimes.byTripId
         }"
         x-show="train.selectedTrain"
       >
@@ -79,7 +84,7 @@
           <img
             class="route-icon"
             x-bind:src="routes[train.selectedTrain?.trip.routeId]?.iconography_url"
-          />
+>
           <span
             class="jetbrains-mono-bold"
             x-text="routes[train.selectedTrain?.trip.routeId]?.long_name"
@@ -95,6 +100,11 @@
             train.selectedTrain?.trip.directionId === 0 ? routes[train.selectedTrain?.trip.routeId]?.description_0 : routes[train.selectedTrain?.trip.routeId]?.description_1
           "
         ></span>
+        <template
+          x-for="stopTime in stopTimesByTripId[train.selectedTrain?.trip.tripId]"
+        >
+          <span x-text="stopTime.departure_time"></span>
+        </template>
       </div>
     </div>
   </body>
@@ -102,4 +112,5 @@
   <script src="map.js" defer></script>
   <script src="routes.js" defer></script>
   <script src="trains.js" defer></script>
+  <script src="stopTimes.js" defer></script>
 </html>

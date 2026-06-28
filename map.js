@@ -39,7 +39,7 @@ map.on("load", () => {
       const [headerLine, ...dataLines] = csv.split("\n");
       const headers = headerLine.split(",");
 
-      const stops = dataLines
+      dataLines
         .map((line) =>
           Object.fromEntries(line.split(",").map((v, i) => [headers[i], v])),
         )
